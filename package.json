@@ -1,0 +1,23 @@
+{
+  "name": "laurea-fullstack-project1",
+  "version": "0.1.0",
+  "description": "Full Stack -sovelluskehitys, projekti 1",
+  "type": "module",
+  "main": "./src/index.js",
+  "scripts": {
+    "start": "node ./src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sauli Kylmänen",
+  "repository": {
+    "url": "git://github.com/saukkko/laurea-fullstack-project1.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.8.0"
+  }
+}

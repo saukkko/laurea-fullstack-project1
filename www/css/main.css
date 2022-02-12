@@ -1,0 +1,25 @@
+.pure-g [class*="pure-u"] {
+  font-family: Roboto, sans-serif;
+}
+
+pre,
+textarea {
+  font-family: "Roboto Mono", monospace;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Open Sans", sans-serif;
+}
+
+div#main {
+  margin: 0 10px;
+}
+
+textarea {
+  height: 150px;
+}
