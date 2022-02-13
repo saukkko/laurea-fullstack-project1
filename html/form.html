@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Message</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://unpkg.com/" />
+    <link
+      rel="preload"
+      href="https://unpkg.com/purecss@2.0.6/build/pure-min.css"
+      as="style"
+      integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Roboto+Mono:wght@300;400&family=Roboto:wght@300;400;700&display=swap"
+      as="style"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Roboto+Mono:wght@300;400&family=Roboto:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/purecss@2.0.6/build/pure-min.css"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/main.css" />
+  </head>
+  <body>
+    <div id="root">
+      <div id="menu"><script src="./js/makeNavBar.js"></script></div>
+      <div class="pure-g">
+        <div class="pure-u-1">
+          <form
+            method="post"
+            action="/post"
+            class="pure-form pure-form-stacked"
+          >
+            <fieldset>
+              <legend>Write something to the guestbook</legend>
+              <fieldset class="pure-group">
+                <input type="number" name="id" hidden value="" />
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="username"
+                  class="pure-input-1"
+                />
+                <input
+                  type="text"
+                  name="country"
+                  placeholder="country"
+                  class="pure-input-1"
+                />
+                <input type="datetime" name="date" hidden value="" />
+              </fieldset>
+              <textarea
+                name="message"
+                placeholder="message"
+                required
+                class="pure-input-1"
+              ></textarea>
+              <input type="submit" value="Submit" class="pure-button" />
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

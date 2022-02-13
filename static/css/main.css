@@ -1,3 +1,4 @@
+/* fonts */
 .pure-g [class*="pure-u"] {
   font-family: Roboto, sans-serif;
 }
@@ -9,17 +10,30 @@ textarea {
 
 h1,
 h2,
-h3,
-h4,
-h5,
-h6 {
+h3 {
   font-family: "Open Sans", sans-serif;
 }
 
-div#main {
+/* the other stuff */
+
+body {
+  background-color: beige;
+}
+
+div#root {
   margin: 0 10px;
+  max-width: 700px;
 }
 
 textarea {
   height: 150px;
+}
+
+p {
+  margin: 0 0.2em;
+}
+
+.pure-menu-heading,
+.pure-menu-item {
+  font-size: 1.2em;
 }

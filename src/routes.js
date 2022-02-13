@@ -2,22 +2,20 @@ import { Router } from "express";
 import { readFile, writeFile } from "fs/promises";
 import { randomUUID } from "crypto";
 export const router = Router();
+
 const guestbookFile = "./guestbook_data.json";
-// router.get("/", (req, res) => res.sendFile("index.html", { root: "./www/" }));
 
 router.get("/newmessage", (req, res) =>
-  res.sendFile("./form.html", { root: "./www/" })
+  res.sendFile("form.html", { root: "./html" })
 );
 
-router.get("/ajaxmessage", (req, res) => {
-  res.sendFile("./ajaxform.html", { root: "./www/" });
-});
+router.get("/ajaxmessage", (req, res) =>
+  res.sendFile("./ajaxform.html", { root: "./html/" })
+);
 
 router.get("/guestbook", (req, res) => {
-  res.setHeader("Content-Type", "application/json");
-
   readFile(guestbookFile)
-    .then((data) => res.send(data.toString()))
+    .then((data) => res.json(JSON.parse(data.toString())))
     .catch((err) => sendError(res, err, 500));
 });
 
