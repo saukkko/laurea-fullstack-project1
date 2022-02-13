@@ -10,16 +10,26 @@ router.get("/newmessage", (req, res) =>
 );
 
 router.get("/ajaxmessage", (req, res) =>
-  res.sendFile("./ajaxform.html", { root: "./html/" })
+  res.sendFile("./ajaxform.html", { root: "./html" })
 );
 
 router.get("/guestbook", (req, res) => {
+  res.sendFile("./guestbook.html", { root: "./html" });
+});
+
+router.get("/entries", (req, res) => {
+  res.setHeader("Content-Type", "application/json");
   readFile(guestbookFile)
-    .then((data) => res.json(JSON.parse(data.toString())))
+    .then((data) => res.send(data.toString()))
     .catch((err) => sendError(res, err, 500));
 });
 
 router.post("/post", (req, res) => {
+  if (parseInt(req.headers["content-length"]) > 3000) {
+    sendError(res, new Error("Content length exceeds 3kb"), 413);
+    return;
+  }
+
   processFormData(req.body)
     .then(() => res.redirect("/guestbook"))
     .catch((err) => sendError(res, err, 400));
@@ -46,8 +56,11 @@ const sendError = (response, error, statusCode) => {
  * @returns {Promise<void>}
  */
 const processFormData = async (newData) => {
+  const file = await readFile(guestbookFile);
+
   /** @type {GuestbookData[]} */
-  const data = JSON.parse((await readFile(guestbookFile)).toString());
+  let data = [];
+  if (file && file.length > 1) data = JSON.parse(file.toString());
 
   return new Promise((resolve, reject) => {
     try {
@@ -55,13 +68,18 @@ const processFormData = async (newData) => {
       if (!newData.message) throw new Error("Message field is mandatory");
 
       if (!newData.username) newData.username = "Anonymous";
-      if (!newData.date) newData.date = new Date().toString();
 
-      newData.id = randomUUID(); //parseInt(data[data.length - 1].id) + 1;
+      newData.date = new Date().toString();
+      do newData.id = randomUUID();
+      while (typeof data.find((x) => x.id == newData.id) !== "undefined");
 
-      data.push(newData);
-      writeFile(guestbookFile, JSON.stringify(data, null, 2)).then(resolve);
+      // POST payload may contain extra fields and we mitigate the issue by ignoring everything else but our fields
+      const { id, username, country, date, message } = newData;
+      data.push({ id, username, country, date, message });
+
+      writeFile(guestbookFile, JSON.stringify(data)).then(resolve);
     } catch (err) {
+      console.error(newData);
       reject(err);
     }
   });
