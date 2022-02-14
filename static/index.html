@@ -5,9 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Guestbook</title>
+    <!-- preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://unpkg.com/" />
+    <!-- preload -->
     <link
       rel="preload"
       href="https://unpkg.com/purecss@2.0.6/build/pure-min.css"
@@ -17,6 +19,12 @@
     />
     <link
       rel="preload"
+      href="https://unpkg.com/purecss@2.0.6/build/grids-responsive-min.css"
+      as="style"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
       href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Roboto+Mono:wght@300;400&family=Roboto:wght@300;400;700&display=swap"
       as="style"
     />
@@ -30,18 +38,32 @@
       crossorigin="anonymous"
     />
     <link
+      rel="stylesheet"
+      href="https://unpkg.com/purecss@2.0.6/build/grids-responsive-min.css"
+      crossorigin="anonymous"
+    />
+    <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="./css/tucked-menu-vertical.css" />
+    <script defer src="./js/tucked-menu-vertical.js"></script>
   </head>
   <body>
+    <div class="custom-wrapper pure-g" id="menu">
+      <script src="./js/makeNavBar.js"></script>
+    </div>
     <div id="root">
-      <div id="menu"><script src="./js/makeNavBar.js"></script></div>
       <h1>Guestbook</h1>
       <div class="pure-g">
         <div class="pure-u-1">
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam quae eligendi aspernatur. Cupiditate sit hic ipsum? Fugiat asperiores excepturi quia quae, sed laborum eum recusandae voluptate nihil rem in minima!</p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam quae
+            eligendi aspernatur. Cupiditate sit hic ipsum? Fugiat asperiores
+            excepturi quia quae, sed laborum eum recusandae voluptate nihil rem
+            in minima!
+          </p>
         </div>
       </div>
     </div>

@@ -10,7 +10,8 @@ textarea {
 
 h1,
 h2,
-h3 {
+h3,
+th {
   font-family: "Open Sans", sans-serif;
 }
 
@@ -22,7 +23,6 @@ body {
 
 div#root {
   margin: 0 10px;
-  max-width: 700px;
 }
 
 textarea {
@@ -30,10 +30,21 @@ textarea {
 }
 
 p {
-  margin: 0 0.2em;
+  text-align: justify;
 }
 
 .pure-menu-heading,
 .pure-menu-item {
   font-size: 1.2em;
+}
+
+.material-icons {
+  color: #777;
+  font-size: 34px;
+}
+
+@media screen and (min-width: 34.999em) {
+  form {
+    max-width: 36em;
+  }
 }

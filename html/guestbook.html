@@ -5,9 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Guestbook</title>
+    <!-- preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://unpkg.com/" />
+    <!-- preload -->
     <link
       rel="preload"
       href="https://unpkg.com/purecss@2.0.6/build/pure-min.css"
@@ -17,6 +19,12 @@
     />
     <link
       rel="preload"
+      href="https://unpkg.com/purecss@2.0.6/build/grids-responsive-min.css"
+      as="style"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
       href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Roboto+Mono:wght@300;400&family=Roboto:wght@300;400;700&display=swap"
       as="style"
     />
@@ -29,69 +37,82 @@
       href="https://unpkg.com/purecss@2.0.6/build/pure-min.css"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/purecss@2.0.6/build/grids-responsive-min.css"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="./css/tucked-menu-vertical.css" />
+    <script defer src="./js/tucked-menu-vertical.js"></script>
   </head>
   <body>
+    <div class="custom-wrapper pure-g" id="menu">
+      <script src="./js/makeNavBar.js"></script>
+    </div>
     <div id="root">
-      <div id="menu">
-        <script src="./js/makeNavBar.js"></script>
-      </div>
-      <div id="test">
-        <script>
-          fetch("/entries", { headers: { Accept: "application/json" } })
-            .then((res) => res.text())
-            .catch((err) => err)
-            .then((data) => {
-              const parent = document.getElementById("test");
+      <div class="pure-g">
+        <div class="pure-u-1" id="test">
+          <script>
+            fetch("/entries", { headers: { Accept: "application/json" } })
+              .then((res) => res.text())
+              .catch((err) => err)
+              .then((data) => {
+                const parent = document.getElementById("test");
 
-              if (data instanceof Error) {
-                parent.innerHTML = `<p>Error: ${data.message}</p>`;
-                console.error(data);
-                return;
-              }
+                if (data instanceof Error) {
+                  parent.innerHTML = `<p>Error: ${data.message}</p>`;
+                  console.error(data);
+                  return;
+                }
 
-              if (!data) {
-                parent.innerHTML = "<p>The guestbook is empty</p>";
-                return;
-              }
+                if (!data) {
+                  parent.innerHTML = "<p>The guestbook is empty</p>";
+                  return;
+                }
 
-              data = JSON.parse(data);
+                data = JSON.parse(data);
 
-              const table = document.createElement("table");
-              table.className = "pure-table";
+                const table = document.createElement("table");
+                table.className = "pure-table";
 
-              const thead = document.createElement("thead");
-              const tr = thead.insertRow();
+                const thead = document.createElement("thead");
+                const tr = thead.insertRow();
 
-              const thCells = Object.keys(data[0]).map((x) => {
-                const th = document.createElement("th");
-                th.innerText = x;
+                const thCells = Object.keys(data[0]).map((x) => {
+                  const th = document.createElement("th");
+                  th.innerText = x;
 
-                return th;
-              });
-
-              tr.replaceChildren(...thCells);
-
-              const tbody = document.createElement("tbody");
-              const rows = data.map((d) => {
-                const tr = tbody.insertRow();
-
-                Object.values(d).forEach((val) => {
-                  const cell = tr.insertCell();
-                  cell.innerText = val;
-
-                  return cell;
+                  return th;
                 });
 
-                return tr;
+                tr.replaceChildren(...thCells);
+
+                const tbody = document.createElement("tbody");
+                const rows = data.map((d) => {
+                  const tr = tbody.insertRow();
+
+                  Object.values(d).forEach((val) => {
+                    const cell = tr.insertCell();
+                    cell.innerText = val;
+
+                    return cell;
+                  });
+
+                  return tr;
+                });
+
+                tbody.replaceChildren(...rows);
+                table.replaceChildren(thead, tbody);
+
+                parent.replaceChildren(table);
               });
-
-              tbody.replaceChildren(...rows);
-              table.replaceChildren(thead, tbody);
-
-              parent.replaceChildren(table);
-            });
-        </script>
+          </script>
+        </div>
       </div>
     </div>
   </body>
