@@ -5,6 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Guestbook</title>
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./favicon-16x16.png"
+    />
     <!-- preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -57,61 +74,7 @@
     <div id="root">
       <div class="pure-g">
         <div class="pure-u-1" id="test">
-          <script>
-            fetch("/entries", { headers: { Accept: "application/json" } })
-              .then((res) => res.text())
-              .catch((err) => err)
-              .then((data) => {
-                const parent = document.getElementById("test");
-
-                if (data instanceof Error) {
-                  parent.innerHTML = `<p>Error: ${data.message}</p>`;
-                  console.error(data);
-                  return;
-                }
-
-                if (!data) {
-                  parent.innerHTML = "<p>The guestbook is empty</p>";
-                  return;
-                }
-
-                data = JSON.parse(data);
-
-                const table = document.createElement("table");
-                table.className = "pure-table";
-
-                const thead = document.createElement("thead");
-                const tr = thead.insertRow();
-
-                const thCells = Object.keys(data[0]).map((x) => {
-                  const th = document.createElement("th");
-                  th.innerText = x;
-
-                  return th;
-                });
-
-                tr.replaceChildren(...thCells);
-
-                const tbody = document.createElement("tbody");
-                const rows = data.map((d) => {
-                  const tr = tbody.insertRow();
-
-                  Object.values(d).forEach((val) => {
-                    const cell = tr.insertCell();
-                    cell.innerText = val;
-
-                    return cell;
-                  });
-
-                  return tr;
-                });
-
-                tbody.replaceChildren(...rows);
-                table.replaceChildren(thead, tbody);
-
-                parent.replaceChildren(table);
-              });
-          </script>
+          <script src="./js/makeTable.js"></script>
         </div>
       </div>
     </div>
