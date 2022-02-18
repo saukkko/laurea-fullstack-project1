@@ -43,8 +43,20 @@ p {
   font-size: 34px;
 }
 
-@media screen and (min-width: 34.999em) {
-  form {
-    max-width: 36em;
-  }
+form,
+table {
+  max-width: 48em;
+}
+
+table {
+  word-wrap: break-word;
+}
+
+th,
+td {
+  max-width: 32em;
+}
+
+input[type="submit"] {
+  margin: 0 5px;
 }

@@ -27,6 +27,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://unpkg.com/" />
     <!-- preload -->
+    <link rel="preload" as="style" href="./css/main.css" />
+    <link rel="preload" as="style" href="./css/tucked-menu-vertical.css" />
+    <link rel="preload" as="script" href="./js/makeNavBar.js" />
+    <link rel="preload" as="script" href="./js/tucked-menu-vertical.js" />
+
+    <link rel="preload" as="script" href="./js/counter.js" />
+    <link rel="prefetch" as="script" href="./js/makeTable.js" />
     <link
       rel="preload"
       href="https://unpkg.com/purecss@2.0.6/build/pure-min.css"
@@ -65,15 +72,16 @@
     />
     <link rel="stylesheet" href="./css/main.css" />
     <link rel="stylesheet" href="./css/tucked-menu-vertical.css" />
-    <script defer src="./js/tucked-menu-vertical.js"></script>
   </head>
   <body>
     <div class="custom-wrapper pure-g" id="menu">
       <script src="./js/makeNavBar.js"></script>
+      <script src="./js/tucked-menu-vertical.js"></script>
     </div>
     <div id="root">
       <div class="pure-g">
         <div class="pure-u-1 pure-u-sm-2-3">
+          <h1>Write new message</h1>
           <form
             method="post"
             action="/post"
@@ -84,7 +92,7 @@
               <fieldset class="pure-group">
                 <input
                   type="text"
-                  name="username"
+                  name="name"
                   placeholder="Name"
                   class="pure-input-2-3"
                 />
@@ -102,9 +110,14 @@
                 class="pure-input-1"
                 id="messagefield"
               ></textarea>
-              <input type="submit" value="Submit" class="pure-button" />
-              <span id="counter">0/2000</span>
-              <script defer src="./js/counter.js"></script>
+              <input type="reset" value="Reset" class="pure-button" />
+              <input
+                type="submit"
+                value="Submit"
+                class="pure-button pure-button-primary"
+              />
+              <span id="counter"></span>
+              <script src="./js/counter.js"></script>
             </fieldset>
           </form>
         </div>
