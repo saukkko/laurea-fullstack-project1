@@ -27,6 +27,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://unpkg.com/" />
     <!-- preload -->
+    <link rel="preload" as="style" href="./css/main.css" />
+    <link rel="preload" as="style" href="./css/tucked-menu-vertical.css" />
+    <link rel="preload" as="script" href="./js/makeNavBar.js" />
+    <link rel="preload" as="script" href="./js/tucked-menu-vertical.js" />
+
+    <link rel="prefetch" as="script" href="./js/counter.js" />
+    <link rel="preload" as="script" href="./js/makeTable.js" />
     <link
       rel="preload"
       href="https://unpkg.com/purecss@2.0.6/build/pure-min.css"
@@ -65,15 +72,20 @@
     />
     <link rel="stylesheet" href="./css/main.css" />
     <link rel="stylesheet" href="./css/tucked-menu-vertical.css" />
-    <script defer src="./js/tucked-menu-vertical.js"></script>
+    
   </head>
   <body>
     <div class="custom-wrapper pure-g" id="menu">
       <script src="./js/makeNavBar.js"></script>
+      <script src="./js/tucked-menu-vertical.js"></script>
     </div>
+  </head>
     <div id="root">
       <div class="pure-g">
-        <div class="pure-u-1" id="test">
+        <div class="pure-u-1">
+          <h1>The guestbook</h1>
+        </div>
+        <div class="pure-u-1" id="table">
           <script src="./js/makeTable.js"></script>
         </div>
       </div>

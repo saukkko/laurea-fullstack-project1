@@ -1,10 +1,9 @@
 "use strict";
-
 fetch("/entries", { headers: { Accept: "application/json" } })
   .then((res) => res.text())
   .catch((err) => err)
   .then((data) => {
-    const parent = document.getElementById("test");
+    const parent = document.getElementById("table");
 
     if (data instanceof Error) {
       parent.innerHTML = `<p>Error: ${data.message}</p>`;
@@ -13,44 +12,55 @@ fetch("/entries", { headers: { Accept: "application/json" } })
     }
 
     if (!data) {
-      parent.innerHTML =
-        "<p>The guestbook is empty. <a href='/newmessage'>Write<a/> something</p>";
+      parent.replaceChildren(
+        (document.createElement("p").innerHTML =
+          "<p>The guestbook is empty. <a href='/newmessage'>Write<a/> something</p>")
+      );
       return;
     }
-
-    data = JSON.parse(data);
+    /** @type {GuestbookData[]} */
+    const guestbookData = JSON.parse(data);
 
     const table = document.createElement("table");
+    const thead = document.createElement("thead");
+    const tbody = document.createElement("tbody");
     table.className = "pure-table";
 
-    const thead = document.createElement("thead");
-    const tr = thead.insertRow();
-
-    const thCells = Object.keys(data[0]).map((x) => {
+    const headerNames = ["Name", "Country", "Message"];
+    const headers = headerNames.map((headerName) => {
       const th = document.createElement("th");
-      th.innerText = x;
+      th.innerText = headerName;
 
       return th;
     });
 
-    tr.replaceChildren(...thCells);
+    thead.insertRow().append(...headers);
 
-    const tbody = document.createElement("tbody");
-    const rows = data.map((d) => {
-      const tr = tbody.insertRow();
+    tbody.append(
+      ...guestbookData.map((o) => {
+        const tr = document.createElement("tr");
 
-      Object.values(d).forEach((val) => {
-        const cell = tr.insertCell();
-        cell.innerText = val;
+        tr.append(
+          ...Object.values(o).map((x, i) => {
+            const td = document.createElement("td");
+            td.dataset.label = headerNames[i];
+            td.textContent = x;
 
-        return cell;
-      });
+            return td;
+          })
+        );
 
-      return tr;
-    });
+        return tr;
+      })
+    );
 
-    tbody.replaceChildren(...rows);
-    table.replaceChildren(thead, tbody);
-
+    table.append(thead, tbody);
     parent.replaceChildren(table);
   });
+
+/**
+ * @typedef {Object} GuestbookData
+ * @property {string} name
+ * @property {string} country
+ * @property {string} message
+ */

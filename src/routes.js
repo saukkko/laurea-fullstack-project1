@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { readFile, writeFile } from "fs/promises";
-import { randomUUID } from "crypto";
 export const router = Router();
 
 const guestbookFile = "./guestbook_data.json";
@@ -25,8 +24,13 @@ router.get("/entries", (req, res) => {
 });
 
 router.post("/post", (req, res) => {
-  if (parseInt(req.headers["content-length"]) > 3000) {
-    sendError(res, new Error("Content length exceeds 3kb"), 413);
+  const contentLength = parseInt(req.headers["content-length"]);
+  if (contentLength > 2000) {
+    sendError(res, new Error("Content length exceeds 2kb"), 413);
+    return;
+  }
+  if (contentLength === 0) {
+    sendError(res, new Error("Empty content not allowed"), 400);
     return;
   }
 
@@ -42,7 +46,6 @@ router.post("/post", (req, res) => {
  * @param {number} statusCode HTTP status code to send
  */
 const sendError = (response, error, statusCode) => {
-  console.error(error);
   response
     .writeHead(statusCode, { "Content-Type": "text/plain" })
     .end(
@@ -53,6 +56,7 @@ const sendError = (response, error, statusCode) => {
 /**
  *
  * @param {GuestbookData} newData
+ * @param {string} contentType
  * @returns {Promise<void>}
  */
 const processFormData = async (newData) => {
@@ -64,22 +68,29 @@ const processFormData = async (newData) => {
 
   return new Promise((resolve, reject) => {
     try {
+      // check data exists
       if (!newData) throw new Error("Request must have a body");
       if (!newData.message) throw new Error("Message field is mandatory");
+      if (!newData.country) throw new Error("Country field is mandatory");
+      if (!newData.name) newData.name = "Anonymous";
 
-      if (!newData.username) newData.username = "Anonymous";
-
-      newData.date = new Date().toString();
-      do newData.id = randomUUID();
-      while (typeof data.find((x) => x.id == newData.id) !== "undefined");
+      // check data validity (this should match the html5 soft caps)
+      if (newData.name.length > 30) {
+        throw new Error("Name field too long");
+      }
+      if (newData.country.length > 30) {
+        throw new Error("Country field too long");
+      }
+      if (newData.message.length > 500) {
+        throw new Error("Message field too long");
+      }
 
       // POST payload may contain extra fields and we mitigate the issue by ignoring everything else but our fields
-      const { id, username, country, date, message } = newData;
-      data.push({ id, username, country, date, message });
+      const { name, country, message } = newData;
+      data.push({ name, country, message });
 
       writeFile(guestbookFile, JSON.stringify(data)).then(resolve);
     } catch (err) {
-      console.error(newData);
       reject(err);
     }
   });
@@ -87,9 +98,7 @@ const processFormData = async (newData) => {
 
 /**
  * @typedef {Object} GuestbookData
- * @property {number} id
- * @property {string} username
+ * @property {string} name
  * @property {string} country
- * @property {string|Date|null} date
  * @property {string} message
  */
