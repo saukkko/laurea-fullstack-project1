@@ -1,4 +1,5 @@
 "use strict";
+import { renderTable } from "/js/makeTable.js";
 
 window.onload = () => {
   const form = document.forms.item(0);
@@ -23,9 +24,12 @@ window.onload = () => {
       method: "POST",
       redirect: "manual",
     })
-      .then(async (res) => {
-        if (typeof res !== "undefined" && res instanceof Response)
-          await import("/js/makeTable.js").then((x) => console.log(x));
+      .then((res) => {
+        if (res instanceof Response) {
+          //todo: could check further if response is ok but what would happen then? display error?
+          console.log("res.type", res.type);
+          renderTable();
+        }
       })
       .catch((err) => console.error(err));
   });
