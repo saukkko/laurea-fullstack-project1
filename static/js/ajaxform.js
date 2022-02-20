@@ -15,9 +15,7 @@ window.onload = () => {
       message: message,
     };
 
-    const payload = Object.entries(formData)
-      .map((x) => x.join("="))
-      .join("&");
+    const payload = new URLSearchParams(formData).toString();
 
     fetch("/post", {
       body: payload,
