@@ -1,6 +1,6 @@
 {
   "name": "laurea-fullstack-project1",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Full Stack -sovelluskehitys, projekti 1",
   "type": "module",
   "main": "./src/index.js",
@@ -14,8 +14,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^16.0.0",
-    "express": "^4.17.2",
+    "express": "^4.17.3",
     "helmet": "^5.0.2"
   },
   "devDependencies": {

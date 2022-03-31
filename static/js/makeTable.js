@@ -3,7 +3,7 @@
 export const renderTable = () => {
   fetch("/entries", { headers: { Accept: "application/json" } })
     .then((res) => res.text())
-    .catch((err) => err)
+    .catch(console.error)
     .then((data) => {
       const parent = document.getElementById("table");
 

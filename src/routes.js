@@ -4,6 +4,8 @@ export const router = Router();
 
 const guestbookFile = "./guestbook_data.json";
 
+router.get("/", (req, res) => res.sendFile("index.html", { root: "./html" }));
+
 router.get("/newmessage", (req, res) =>
   res.sendFile("form.html", { root: "./html" })
 );
